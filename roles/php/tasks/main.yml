@@ -1,0 +1,27 @@
+- name: Install PHP-FPM service
+  ansible.builtin.apt:
+    name: php-fpm
+    state: present
+  become: yes
+  tags:
+    - php
+    - php_installation
+    - installation
+
+- name: PHP-FPM > Configuration
+  ansible.builtin.template:
+    src: "app.ini.j2"
+    dest: "/etc/php/8.2/fpm/app.ini"
+  become: yes
+  notify: 
+    - restart_php-fpm
+  tags:
+    - php
+    - php_configuration
+    - configuration
+
+- name: Install PHP MySQL extension
+  ansible.builtin.apt:
+    name: php-mysql
+    state: present
+  become: yes

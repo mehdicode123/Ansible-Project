@@ -1,0 +1,49 @@
+- name: Install MySQL server on Debian 12
+  ansible.builtin.apt:
+    name: default-mysql-server
+    state: present
+  become: yes
+  tags:
+    - mysql
+
+- name: Install MySQLDB python on Debian 12
+  ansible.builtin.apt:
+    name: python3-mysqldb
+    state: present
+  become: yes
+
+- name: Create staging database
+  mysql_db:
+    name: "{{ stag_db_name }}"
+    state: present
+  become: yes
+
+- name: Create staging MySQL user
+  mysql_user:
+    name: "{{ stag_user }}"
+    password: "{{ mysql_stag_pass }}"
+    priv: '*.*:ALL'
+    host: '%'
+    state: present
+  become: yes
+  vars:
+    column_case_sensitive: false
+
+- name: Create production database
+  mysql_db:
+    name: "{{ prod_db_name }}"
+    state: present
+  become: yes
+  
+- name: Create production MySQL user
+  mysql_user:
+    name: "{{ prod_user }}"
+    password: "{{ mysql_prod_pass }}"
+    priv: '*.*:ALL'
+    host: '%'
+    state: present
+  become: yes
+  notify:
+    - restart_mysql
+  vars:
+    column_case_sensitive: false

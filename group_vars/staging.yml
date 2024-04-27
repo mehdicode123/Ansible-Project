@@ -1,0 +1,6 @@
+stage: staging
+workshop_motd_scripts:
+  - file: 10-message
+    template: scripts/{{ stage }}.j2
+    message: "Ceci est un environment de staging !"
+memory: 512M

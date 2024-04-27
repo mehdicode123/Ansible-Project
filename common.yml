@@ -1,0 +1,10 @@
+- name: Update APT Cache index
+  ansible.builtin.apt: 
+    update_cache: yes
+  become: yes
+  when: ansible_distribution == "Debian"
+
+- name: Set a hostname
+  ansible.builtin.hostname:
+    name: "{{ hostname }}"
+  become: yes
