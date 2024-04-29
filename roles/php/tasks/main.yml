@@ -25,3 +25,7 @@
     name: php-mysql
     state: present
   become: yes
+  tags:
+    - php
+    - php-mysql
+    - installation
