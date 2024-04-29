@@ -13,8 +13,9 @@
     state: present
   become: yes
   tags:
+    - mysql
     - python-mysql
-    - insttalation
+    - installation
 
 - name: Create staging database
   mysql_db:
@@ -22,8 +23,9 @@
     state: present
   become: yes
   tags:
-    - db_staging
+    - mysql
     - db
+    - staging
 
 - name: Create staging MySQL user
   mysql_user:
@@ -34,8 +36,9 @@
     state: present
   become: yes
   tags:
-    - staging_user
+    - db
     - db_user
+    - staging
   vars:
     column_case_sensitive: false
 
@@ -45,8 +48,9 @@
     state: present
   become: yes
   tags:
-    - db_production
+    - mysql
     - db
+    - production
   
 - name: Create production MySQL user
   mysql_user:
@@ -57,7 +61,10 @@
     state: present
   become: yes
   tags:
-    - pr
+    - mysql
+    - db
+    - db_user
+    - production
   notify:
     - restart_mysql
   vars:
