@@ -28,7 +28,9 @@
     mode: '0755'
   become: yes
   tags:
+    - nginx
     - directory_creation
+    - deployment
 
 - name: Copy PHP page to server
   ansible.builtin.copy:
@@ -38,6 +40,7 @@
     mode: '0644'
   become: yes
   tags:
+    - nginx
     - deployment
 
 - name: Supprimer le fichier si le nom de serveur est déclaré 2 fois
@@ -45,4 +48,6 @@
     path: /etc/nginx/sites-enabled/default
     state: absent
   become: yes
+  tags:
+    - nginx
 
